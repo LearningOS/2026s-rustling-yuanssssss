@@ -9,14 +9,14 @@
 // Execute `rustlings hint errors1` or use the `hint` watch subcommand for a
 // hint.
 
-// I AM NOT DONE
+// 
 
-pub fn generate_nametag_text(name: String) -> Option<String> {
+pub fn generate_nametag_text(name: String) -> Result<String,String> {
     if name.is_empty() {
         // Empty names aren't allowed.
-        None
+        Err("`name` was empty; it must be nonempty.".into())
     } else {
-        Some(format!("Hi! My name is {}", name))
+        Ok(format!("Hi! My name is {}", name))
     }
 }
 
@@ -32,7 +32,12 @@ mod tests {
         );
     }
 
-    #[test]
+    /// 测试当输入的名称为空字符串时，`generate_nametag_text` 函数是否返回预期的错误信息。
+///
+/// # Errors
+///
+/// 当输入的名称为空字符串时，函数应返回一个错误，提示名称不能为空。
+#[test]
     fn explains_why_generating_nametag_text_fails() {
         assert_eq!(
             generate_nametag_text("".into()),
